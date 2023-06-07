@@ -19,7 +19,7 @@ import PictureAsPdfTwoToneIcon from '@mui/icons-material/PictureAsPdfOutlined';
 import ArchiveTwoToneIcon from '@mui/icons-material/ArchiveOutlined';
 
 const CardWrapper = styled(MainCard)(({ theme }) => ({
-  backgroundColor: theme.palette.secondary.dark,
+  backgroundColor: theme.palette.warning.dark,
   color: '#fff',
   overflow: 'hidden',
   position: 'relative',
@@ -164,7 +164,7 @@ const EarningCard = ({ isLoading }) => {
                   sx={{
                     fontSize: '1rem',
                     fontWeight: 500,
-                    color: theme.palette.secondary[200]
+                    color: theme.palette.grey[500]
                   }}
                 >
                   Total Earning
