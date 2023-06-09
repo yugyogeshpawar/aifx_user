@@ -13,21 +13,136 @@ export default function QuickFilteringGrid() {
     visibleFields: VISIBLE_FIELDS,
     rowLength: 500
   });
+  const rows2 = [
+    {
+      id: 1,
+      record_no: 1,
+      member_user_id: '4660264',
+      member_name: 'JAYPATEL',
+      with_amt: 200,
+      with_date: '2023-05-25T10:21:38.000Z',
+      net_amt: 0,
+      with_referrance: 'WITHDRAW46602642023-05-25 15:51:38',
+      paid_status: 1,
+      transaction_id: null,
+      with_type: null,
+      isverified: 0
+    },
+    {
+      id: 2,
+      record_no: 2,
+      member_user_id: '4660264',
+      member_name: 'JAYPATEL',
+      with_amt: 200,
+      with_date: '2023-05-25T10:23:01.000Z',
+      net_amt: 0,
+      with_referrance: 'oodi469f92pj4u1w83ti9p',
+      paid_status: 0,
+      transaction_id: null,
+      with_type: null,
+      isverified: 0
+    },
+    {
+      id: 3,
+      record_no: 3,
+      member_user_id: '4660264',
+      member_name: 'JAYPATEL',
+      with_amt: 200,
+      with_date: '2023-05-25T10:24:08.000Z',
+      net_amt: 0,
+      with_referrance: '9zqzg4J6Zfv5h9QMpPLZ',
+      paid_status: 0,
+      transaction_id: null,
+      with_type: null,
+      isverified: 2
+    },
+    {
+      id: 4,
+      record_no: 4,
+      member_user_id: '4660264',
+      member_name: 'JAYPATEL',
+      with_amt: 200,
+      with_date: '2023-05-25T10:24:33.000Z',
+      net_amt: 0,
+      with_referrance: '8BWBOK1AERGADCDLSNGF',
+      paid_status: 0,
+      transaction_id: null,
+      with_type: null,
+      isverified: 0
+    },
+    {
+      id: 5,
+      record_no: 5,
+      member_user_id: '4660264',
+      member_name: 'JAYPATEL',
+      with_amt: 200,
+      with_date: '2023-05-25T10:26:05.000Z',
+      net_amt: 0,
+      with_referrance: '0DRWNRUX9RQZIAG9O5NM',
+      paid_status: false,
+      transaction_id: null,
+      with_type: null,
+      isverified: 1
+    }
+  ];
 
+  const newcolumn = [
+    {
+      field: 'id',
+      headerName: 'ID'
+    },
+    {
+      field: 'with_date',
+      headerName: 'Date ',
+      hide: 'true'
+    },
+    {
+      field: 'member_name',
+      headerName: 'Name',
+      hide: 'true'
+    },
+    {
+      field: 'with_amt',
+      headerName: 'Investment Level',
+      width: 150
+    },
+
+    {
+      field: 'paid_status',
+      headerName: 'Investment Amount ',
+      width: 150
+    },
+    {
+      field: 'transaction_id',
+      headerName: 'Income Percent ',
+      width: 150
+    }
+  ];
+  const data2 = {
+    status: false,
+    message: 'No referral bonus',
+    output: undefined
+  };
+  console.log(newcolumn);
+  console.log(rows2);
   // Otherwise filter will be applied on fields such as the hidden column id
   const columns = React.useMemo(() => data.columns.filter((column) => VISIBLE_FIELDS.includes(column.field)), [data.columns]);
   console.log(columns);
 
+  if (data2.output == undefined) {
+    data2.output = [];
+  }
+
   return (
     <Box sx={{ height: '80vh', width: 1 }}>
       <DataGrid
-        {...data}
+        rows={data2.output}
         initialState={{
           pagination: {
             paginationModel: { pageSize: 20, page: 0 }
           }
         }}
-        columns={columns}
+        columns={newcolumn}
         slots={{ toolbar: GridToolbar }}
         slotProps={{
           toolbar: {
