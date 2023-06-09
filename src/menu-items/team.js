@@ -30,7 +30,7 @@ const team = {
         },
         {
           id: 'stacking-summary',
-          title: 'Stacking Summary',
+          title: 'My Team',
           type: 'item',
           url: '/team/my-team'
         }
