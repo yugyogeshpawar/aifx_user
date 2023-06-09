@@ -3,7 +3,15 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
+import Stack from '@mui/material/Stack';
 
+function NoRowsOverlay() {
+  return (
+    <Stack height="100%" alignItems="center" justifyContent="center">
+      No Data
+    </Stack>
+  );
+}
 const initialState = {
   columns: {
     columnVisibilityModel: {
@@ -174,6 +182,7 @@ export default function DataGridDemo() {
     <Box sx={{ height: 400, width: '100%' }}>
       <DataGrid
         rows={data2}
+        components={{ NoRowsOverlay }}
         columns={columns}
         initialState={{
           pagination: {
@@ -185,7 +194,7 @@ export default function DataGridDemo() {
         pageSizeOptions={[5]}
         checkboxSelection
         disableRowSelectionOnClick
-      />
+      />    
     </Box>
   );
 }
