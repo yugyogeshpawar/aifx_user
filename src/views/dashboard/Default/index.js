@@ -14,6 +14,7 @@ import PendingCard from './DashboardCard/PendingCard';
 import TotalStaking from './DashboardCard/TotalStaking';
 import ConfirmWithdraw from './DashboardCard/ConfirmWithdraw';
 import ActiveCard from './DashboardCard/ActiveCard';
+import TotalIncomeG from './DashboardCard/TotalIncomeG';
 // import TotalGrowthBarChart from './TotalGrowthBarChart';
 import { gridSpacing } from 'store/constant';
 
@@ -38,7 +39,7 @@ const Dashboard = () => {
           <Grid item lg={4} md={12} sm={12} xs={12}>
             <Grid container spacing={gridSpacing}>
               <Grid item sm={6} xs={12} md={6} lg={12}>
-                <TotalIncomeDarkCard isLoading={isLoading} />
+                <ActiveCard isLoading={isLoading} />
               </Grid>
               <Grid item sm={6} xs={12} md={6} lg={12}>
                 <TotalIncomeLightCard isLoading={isLoading} />
@@ -70,7 +71,7 @@ const Dashboard = () => {
       <Grid item lg={4} md={12} sm={12} xs={12}>
         <Grid container spacing={gridSpacing}>
           <Grid item sm={6} xs={12} md={6} lg={12}>
-            <TotalIncomeDarkCard isLoading={isLoading} title={'Today Stacking'} />
+            <ConfirmWithdraw isLoading={isLoading} title={'Today Stacking'} />
           </Grid>
           <Grid item sm={6} xs={12} md={6} lg={12}>
             <PendingCard isLoading={isLoading} title={'Total Income'} />
@@ -82,18 +83,12 @@ const Dashboard = () => {
           <Grid item sm={6} xs={12} md={6} lg={12}>
             <PendingCard isLoading={isLoading} title={'Pending Withdraw Request'} />
           </Grid>
-          <Grid item sm={6} xs={12} md={6} lg={12}>
-            <ConfirmWithdraw isLoading={isLoading} title={'Confirm Withdraw Request'} />
-          </Grid>
         </Grid>
       </Grid>
       <Grid item lg={4} md={12} sm={12} xs={12}>
         <Grid container spacing={gridSpacing}>
           <Grid item sm={6} xs={12} md={6} lg={12}>
-            <TotalIncomeDarkCard isLoading={isLoading} title={'Total Income'} />
-          </Grid>
-          <Grid item sm={6} xs={12} md={6} lg={12}>
-            <ActiveCard isLoading={isLoading} title={'Total Income'} />
+            <TotalIncomeG isLoading={isLoading} title={'Total Income'} />
           </Grid>
         </Grid>
       </Grid>
@@ -101,9 +96,6 @@ const Dashboard = () => {
         <Grid container spacing={gridSpacing}>
           <Grid item sm={6} xs={12} md={6} lg={12}>
             <InactiveCard isLoading={isLoading} title={'Inactive'} />
-          </Grid>
-          <Grid item sm={6} xs={12} md={6} lg={12}>
-            <TotalIncomeLightCard isLoading={isLoading} title={'Total investment'} />
           </Grid>
         </Grid>
       </Grid>
