@@ -6,12 +6,17 @@ import axios from 'axios';
 let stakingHistory = [];
 let withDrawHistory = [];
 let teams = [];
+let refBonus = [];
+let stackingBonus = [];
+let myRefferal = [];
 const initializer = {
   stakingHistorySucess: false,
   stakingBonusSucess: false,
   refBonusSucess: false,
   withdrawHisSuccess: false,
-  teamListSucess: false
+  teamListSucess: false,
+  RefBonusSucess: false,
+  myRefferalSucess: false
 };
 
 const initialState = {
@@ -76,6 +81,60 @@ export async function getTeams() {
     }
   }
   return teams;
+}
+// ----------------------------------------------------------------------
+export async function getStakingBonus() {
+  if (!initializer.stakingBonusSucess) {
+    try {
+      const accessToken = window.localStorage.getItem('accessToken');
+      const headers = { Authorization: `Bearer ${accessToken}` };
+      const response = await axios.get(`${baseUrl}/Earning/StakingBonus`, {
+        headers
+      });
+      initializer.stakingBonusSucess = true;
+      stackingBonus = response.data;
+    } catch (error) {
+      console.log(error);
+      initializer.stakingBonusSucess = false;
+    }
+  }
+  return stackingBonus;
+}
+// ----------------------------------------------------------------------
+export async function getMyRefferal() {
+  if (!initializer.myRefferalSucess) {
+    try {
+      const accessToken = window.localStorage.getItem('accessToken');
+      const headers = { Authorization: `Bearer ${accessToken}` };
+      const response = await axios.get(`${baseUrl}/Earning/StakingBonus`, {
+        headers
+      });
+      initializer.myRefferalSucess = true;
+      myRefferal = response.data;
+    } catch (error) {
+      console.log(error);
+      initializer.myRefferalSucess = false;
+    }
+  }
+  return myRefferal;
+}
+// ----------------------------------------------------------------------
+export async function getRefBonus() {
+  if (!initializer.RefBonusSucess) {
+    try {
+      const accessToken = window.localStorage.getItem('accessToken');
+      const headers = { Authorization: `Bearer ${accessToken}` };
+      const response = await axios.get(`${baseUrl}/Earning/StakingBonus`, {
+        headers
+      });
+      initializer.RefBonusSucess = true;
+      refBonus = response.data;
+    } catch (error) {
+      console.log(error);
+      initializer.RefBonusSucess = false;
+    }
+  }
+  return refBonus;
 }
 // ----------------------------------------------------------------------
 export async function getWithdrawHistory() {

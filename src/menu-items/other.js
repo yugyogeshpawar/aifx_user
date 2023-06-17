@@ -22,7 +22,7 @@ const other = {
       id: 'documentation',
       title: 'Documentation',
       type: 'item',
-      url: 'https://codedthemes.gitbook.io/aifx/',
+      url: 'https://codedthemes.gitbook.io/AIFX/',
       icon: icons.IconHelp,
       external: true,
       target: true

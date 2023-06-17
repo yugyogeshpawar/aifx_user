@@ -45,6 +45,7 @@ const AuthContext = createContext({
   ...initialState,
   method: 'jwt',
   login: () => Promise.resolve(),
+  forgotPassword: () => Promise.resolve(),
   logout: () => Promise.resolve()
 });
 
@@ -114,6 +115,16 @@ function AuthProvider({ children }) {
     });
   };
 
+  const forgotPassword = async (values) => {
+    const accessToken = window.localStorage.getItem('accessToken');
+    const response = await axios({
+      method: 'put',
+      url: `${baseUrl}/Account/changePassword`,
+      headers: { authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
+      data: values
+    });
+    return response.data;
+  };
   const changePassword = async (values) => {
     const accessToken = window.localStorage.getItem('accessToken');
     const response = await axios({
@@ -139,7 +150,8 @@ function AuthProvider({ children }) {
         method: 'jwt',
         login,
         logout,
-        changePassword
+        changePassword,
+        forgotPassword
       }}
     >
       {children}

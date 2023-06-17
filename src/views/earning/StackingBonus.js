@@ -1,102 +1,64 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
+import { useEffect, useState } from 'react';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import { useDemoData } from '@mui/x-data-grid-generator';
+import { format } from 'date-fns';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
-const VISIBLE_FIELDS = ['id', 'name', 'rating', 'email', 'country', 'city', 'dateCreated', 'isAdmin', 'phone', 'position'];
 
-export default function QuickFilteringGrid() {
+export default function StakingBonusPage() {
+  const [rows, setRows] = useState([]);
   const navigate = useNavigate();
-  const { data } = useDemoData({
-    dataSet: 'Employee',
-    visibleFields: VISIBLE_FIELDS,
-    rowLength: 100
-  });
 
-  const User = {
-    initialState: {
-      columns: {
-        columnVisibilityModel: {
-          ActionButton: false,
-          date: false,
-          member_user_id: false,
-          member_name: false,
-          wallet_addres: false,
-          Wallet_amount: false
-        }
+  useEffect(() => {
+    const fetchData = async () => {
+      // Fetch staking bonus data from the API
+      const res = await getStakingBonus(); // Replace with your API call
+      if (Array.isArray(res?.data)) {
+        // Map the data to the desired structure
+        const mappedData = res.data.map((item, index) => ({
+          id: index + 1,
+          date: format(new Date(item.date), 'dd-MM-yyyy'),
+          memberUserId: item.memberUserId,
+          memberName: item.memberName,
+          walletAddress: item.walletAddress,
+          walletAmount: item.walletAmount
+        }));
+        setRows(mappedData);
       }
-    },
-    columns: [],
-    rows: [
-      {
-        id: 1,
-        date: '20-5-2023',
-        memberUserId: '6873419',
-        memberName: 'X PIC',
-        walletAddres: '0x54554fhef0dfg',
-        requestAmount: 8000
-      }
-    ]
+    };
+
+    fetchData();
+  }, []);
+
+  const handleButtonClick = (id) => {
+    // Handle button click to navigate to the transaction details page
+    navigate(`/${id}`);
   };
 
-  // Otherwise filter will be applied on fields such as the hidden column id
-
-  const newcolumn = [
-    {
-      field: 'id',
-      headerName: 'Id'
-    },
-    {
-      field: 'date',
-      headerName: 'Date'
-    },
-
-    {
-      field: 'memberUserId',
-      headerName: 'User Id',
-      hide: true
-    },
-    {
-      field: 'memberName',
-      headerName: 'Name',
-      width: 120
-    },
-    {
-      field: 'walletAddres',
-      headerName: 'Wallet Address',
-      width: 200
-    },
-    {
-      field: 'walletAmount',
-      headerName: 'Wallet Amount',
-      width: 120
-    },
+  const columns = [
+    { field: 'id', headerName: 'Id' },
+    { field: 'date', headerName: 'Date' },
+    { field: 'memberUserId', headerName: 'User Id', hide: true },
+    { field: 'memberName', headerName: 'Name', width: 120 },
+    { field: 'walletAddress', headerName: 'Wallet Address', width: 200 },
+    { field: 'walletAmount', headerName: 'Wallet Amount', width: 120 },
     {
       field: 'action',
       headerName: 'Action',
       sortable: false,
       width: 150,
-      renderCell: (param) => {
-        const onClick = (e) => {
-          e.stopPropagation(); // don't select this row after clicking
-
-          navigate(`/${param.id}`);
-        };
-
-        return <Button onClick={onClick}>Show Transaction</Button>;
-      }
+      renderCell: (params) => <Button onClick={() => handleButtonClick(params.row.id)}>Show Transaction</Button>
     }
   ];
-  console.log(newcolumn);
-  console.log(data);
 
   return (
-    <Box sx={{ height: '82vh', width: 1 }}>
+    <div style={{ height: '80vh', width: '100%' }}>
       <DataGrid
-        {...User}
-        columns={newcolumn}
-        slots={{ toolbar: GridToolbar }}
+        rows={rows}
+        columns={columns}
+        components={{ Toolbar: GridToolbar }}
+        autoPageSize
+        showToolbar
         slotProps={{
           toolbar: {
             showQuickFilter: true,
@@ -105,6 +67,6 @@ export default function QuickFilteringGrid() {
         }}
         sx={{ background: '#fff', padding: 2, borderRadius: 4 }}
       />
-    </Box>
+    </div>
   );
 }

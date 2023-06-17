@@ -7,28 +7,29 @@ import GuestGuard from '../guards/GuestGuard';
 // login option 3 routing
 const AuthLogin = Loadable(lazy(() => import('views/pages/authentication/authentication/Login')));
 const AuthRegister = Loadable(lazy(() => import('views/pages/authentication/authentication/Register')));
+const ForgotPassword = Loadable(lazy(() => import('views/pages/authentication/authentication/ForgotPassword')));
 
 // ==============================|| AUTHENTICATION ROUTING ||============================== //
 
 const AuthenticationRoutes = {
   path: '/',
-  element: <MinimalLayout />,
+  element: (
+    <GuestGuard>
+      <MinimalLayout />{' '}
+    </GuestGuard>
+  ),
   children: [
     {
       path: '/login',
-      element: (
-        <GuestGuard>
-          <AuthLogin />
-        </GuestGuard>
-      )
+      element: <AuthLogin />
     },
     {
       path: '/register',
-      element: (
-        <GuestGuard>
-          <AuthRegister />
-        </GuestGuard>
-      )
+      element: <AuthRegister />
+    },
+    {
+      path: '/forgot-password',
+      element: <ForgotPassword />
     }
   ]
 };

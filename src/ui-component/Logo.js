@@ -22,7 +22,7 @@ const Logo = () => {
      *
      */
     <div style={{ display: 'flex', alignItems: 'center' }}>
-      <img src={logo} alt="aifx" width="40" />
+      <img src={logo} alt="AIFX" width="40" />
       <div
         style={{
           fontSize: '38px',

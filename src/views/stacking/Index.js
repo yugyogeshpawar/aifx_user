@@ -7,8 +7,20 @@ import QrCode from '../../assets/images/qrcode/qr-code.png';
 import Snackbar from '@mui/material/Snackbar';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
+
 export default function ValidationTextFields() {
   const [open, setOpen] = React.useState(false);
+  const [formValues, setFormValues] = React.useState({
+    wallet: '',
+    staking: '',
+    transactionHash: ''
+  });
+  const [validationErrors, setValidationErrors] = React.useState({
+    wallet: '',
+    staking: '',
+    transactionHash: ''
+  });
+
   const handleClick = () => {
     onCopyClick();
   };
@@ -51,20 +63,64 @@ export default function ValidationTextFields() {
       </IconButton>
     </React.Fragment>
   );
+
+  const validateForm = () => {
+    const errors = {};
+
+    // Wallet validation
+    if (formValues.wallet.trim() === '') {
+      errors.wallet = 'Wallet is required.';
+    }
+
+    // Staking validation
+    if (formValues.staking.trim() === '') {
+      errors.staking = 'Staking amount is required.';
+    }
+
+    // Transaction hash validation
+    if (formValues.transactionHash.trim() === '') {
+      errors.transactionHash = 'Transaction hash is required.';
+    }
+
+    return errors;
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const errors = validateForm();
+
+    if (Object.keys(errors).length === 0) {
+      // Form is valid, submit the data or perform any other desired action
+      console.log('Form submitted:', formValues);
+    } else {
+      // Set validation errors
+      setValidationErrors(errors);
+    }
+  };
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormValues((prevState) => ({ ...prevState, [name]: value }));
+  };
+
   return (
     <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
       <Box
         component="form"
         noValidate
         autoComplete="off"
+        onSubmit={handleSubmit}
         sx={{ display: 'flex', flexDirection: 'column', background: 'white', width: 'fit-content', p: 4, borderRadius: '20px', mb: 4 }}
       >
         <TextField
-          // error
-          id="outlined-error-helper-text"
+          error={Boolean(validationErrors.wallet)}
+          id="outlined-error-helper-text-wallet"
           label="Wallet"
-          // defaultValue="Hello World"
-          helperText="Incorrect entry."
+          name="wallet"
+          value={formValues.wallet}
+          onChange={handleInputChange}
+          helperText={validationErrors.wallet}
           sx={{
             mt: 2,
             width: { sm: 200, md: 300 },
@@ -73,11 +129,13 @@ export default function ValidationTextFields() {
         />
 
         <TextField
-          // error
-          id="outlined-error-helper-text"
+          error={Boolean(validationErrors.staking)}
+          id="outlined-error-helper-text-staking"
           label="Staking(USD)"
-          // defaultValue="Hello World"
-          helperText="Incorrect entry."
+          name="staking"
+          value={formValues.staking}
+          onChange={handleInputChange}
+          helperText={validationErrors.staking}
           sx={{
             mt: 2,
             width: '300px'
@@ -85,11 +143,13 @@ export default function ValidationTextFields() {
         />
 
         <TextField
-          // error
-          id="outlined-error-helper-text"
-          label="Transaction Hash "
-          // defaultValue="Hello World"
-          helperText="Incorrect entry."
+          error={Boolean(validationErrors.transactionHash)}
+          id="outlined-error-helper-text-transaction-hash"
+          label="Transaction Hash"
+          name="transactionHash"
+          value={formValues.transactionHash}
+          onChange={handleInputChange}
+          helperText={validationErrors.transactionHash}
           sx={{
             mt: 2,
             width: { sm: 200, md: 300 },
@@ -97,7 +157,7 @@ export default function ValidationTextFields() {
           }}
         />
 
-        <Button variant="contained" disableElevation sx={{ mt: 2, width: '200px' }}>
+        <Button type="submit" variant="contained" disableElevation sx={{ mt: 2, width: '200px' }}>
           Submit
         </Button>
       </Box>
